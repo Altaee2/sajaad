@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيد ميلاد سعيد يا سجاد 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary-color: #d1007d;
+  --accent-color: #ffd700;
+  --bg-color: #f4ecff;
+  --card-bg: #ffffff;
+  --text-color: #333;
+}
+
+/* الأساسيات */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Tajawal", sans-serif;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* العنوان */
+.header-text {
+  color: var(--text-color);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin-bottom: 25px;
+}
+.header-text.visible { opacity: 1; transform: translateY(0); }
+.header-text h1 {
+  font-size: 1.5em;
+  color: var(--primary-color);
+}
+.header-text p {
+  font-size: 1.5em;
+  color: #666;
+}
+
+/* إطار الصورة */
+.image-frame-container {
+  position: relative;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    padding: 15px;
+    background: linear-gradient(270deg, #ff007f, #00ffff, #ff9900, #ff007f);
+    background-size: 600% 600%;
+    animation: borderMove 3s ease infinite;
+    box-shadow: 0 0 205px rgba(255, 255, 255, 0.3);
+}
+.image-frame-container.visible { opacity: 1; }
+.rotating-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 8px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent-color),
+    #ffa500,
+    #3cb371,
+    #40e0d0,
+    #9370db,
+    #ff6347,
+    var(--accent-color)
+  );
+  animation: rotate 2s linear infinite;
+  z-index: 1;
+}
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 0 5px var(--card-bg), 0 5px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 2;
+}
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transform: scale(1.02);
+}
+
+/* الرقم تحت الصورة */
+.age-info {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin-top: 10px;
+}
+.age-info.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.age-number {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+  margin-bottom: 5px;
+}
+.age-text {
+  font-size: 1.1em;
+  color: #666;
+  font-style: italic;
+}
+
+/* البطاقة */
+.message-card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.message-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.message-card h2 {
+  background: var(--primary-color);
+  color: #fff;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.message-card p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.message-card .signature {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #777;
+}
+
+/* الزر */
+#celebrate-button {
+  margin-top: 20px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+#celebrate-button:hover {
+  background: #a70064;
+  transform: translateY(-2px);
+}
+
+/* الكونفيتي */
+.confetti-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+.confetti {
+  position: absolute;
+  width: 8px; height: 8px;
+  opacity: 0;
+  animation: fall 3s ease-in forwards;
+}
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- موسيقى الخلفية -->
+<audio id="bg-music" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/02/01/audio_1b72dd70f3.mp3?filename=soft-piano-melody-138998.mp3" type="audio/mpeg">
+</audio>
+
+<!-- صوت الزر -->
+<audio id="click-sound">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_51e4b77f5a.mp3?filename=magic-sparkle-117660.mp3" type="audio/mpeg">
+</audio>
+
+<div class="confetti-container"></div>
+
+<header class="header-text" id="header-text">
+  <h1>عيد ميلاد سعيد يا سجاد! 🥳</h1>
+  <p>18 عاماً من الإبداع والابتسامات الجميلة</p>
+</header>
+
+<div class="image-frame-container" id="image-frame-container">
+  <div class="rotating-border"></div>
+  <div class="profile-image">
+    <img src="sajad.jpg" alt="صورة سجاد محمد" />
+  </div>
+</div>
+
+<div class="age-info" id="age-info">
+  <div class="age-number">18</div>
+  <div class="age-text">بداية فصل جديد من التألق ✨</div>
+</div>
+
+<div class="message-card" id="message-card">
+  <h2>إلى صديقي الغالي سجاد الأسدي ❤️</h2>
+  <p>كل عام وأنت مصدر النور والبهجة، يا من تجعل كل لحظة أجمل بابتسامتك.</p>
+  <p>أتمنى لك حياة مليئة بالفرح والنجاحات وتحقيق الأحلام 🌸</p>
+  <p class="signature">محبك، علي الطائي</p>
+  <button id="celebrate-button">تمنى أمنية واضغط هنا 🎉</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const headerText = document.getElementById("header-text");
+  const imageFrame = document.getElementById("image-frame-container");
+  const ageInfo = document.getElementById("age-info");
+  const messageCard = document.getElementById("message-card");
+  const button = document.getElementById("celebrate-button");
+  const confettiContainer = document.querySelector(".confetti-container");
+  const clickSound = document.getElementById("click-sound");
+
+  const steps = [
+    () => {
+      headerText.classList.add("visible");
+      imageFrame.classList.add("visible");
+      setTimeout(next, 1500);
+    },
+    () => {
+      ageInfo.classList.add("visible");
+      setTimeout(next, 1200);
+    },
+    () => {
+      messageCard.classList.add("visible");
+    },
+  ];
+
+  let step = 0;
+  function next() {
+    if (step < steps.length) steps[step++]();
+  }
+  setTimeout(next, 300);
+
+  // كونفيتي + صوت
+  button.addEventListener("click", () => {
+    clickSound.play();
+    const colors = ["#ffd700", "#40e0d0", "#ff6347", "#9370db", "#ffffff"];
+    for (let i = 0; i < 50; i++) {
+      const c = document.createElement("div");
+      c.classList.add("confetti");
+      c.style.left = `${Math.random() * 100}vw`;
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = `${3 + Math.random() * 2}s`;
+      confettiContainer.appendChild(c);
+      c.addEventListener("animationend", () => c.remove());
+    }
+  });
+});
+</script>
+</body>
+</html>
